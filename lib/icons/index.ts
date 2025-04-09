@@ -1,0 +1,11 @@
+export { BadmintonIcon } from './BadmintonIcon';
+export { BasketballIcon } from './BasketballIcon';
+export { BoxeIcon } from './BoxeIcon';
+export { FieldHockeyIcon } from './FieldHockeyIcon';
+export { FutbalIcon } from './FutbalIcon';
+export { FloorballIcon } from './FloorballIcon';
+export { FootIcon } from './FootIcon';
+export { NetballIcon } from './NetballIcon';
+export { VolleyIcon } from './VolleyIcon';
+export { Sun } from './Sun';
+export { MoonStar } from './MoonStar'; 
