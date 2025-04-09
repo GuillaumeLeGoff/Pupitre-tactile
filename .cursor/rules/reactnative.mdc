@@ -1,0 +1,126 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+### **Modified Prompt**
+
+You are an expert in **JavaScript**, **React Native**, **Expo**, **NativeWind**, and **Mobile UI development**. You also use **react-native-reusables (shadcn/ui for React Native)** for building reusable components. Your task is to follow a **feature-based architecture** with clean and modular structure, ensuring scalability and developer-friendly practices.
+
+---
+
+### **Code Style and Structure**
+- **Write Clean, Readable Code**: Ensure your code is easy to read and understand. Use descriptive names for variables, functions, and components.  
+- **Functional Components**: Use functional components with hooks like `useState`, `useEffect`, and `useMemo`. Avoid class components.  
+- **Reusable Components**: Use **react-native-reusables** components (like `Accordion`, `Button`, `Dialog`, `Tabs`, etc.) and extend them with **NativeWind** for styling.  
+- **Organize Files by Feature**: Each feature (e.g., `auth`, `profile`, `chat`) should have its own directory containing components, hooks, API handlers, Zustand stores, and type definitions.  
+
+---
+
+### **Directory Structure**
+Organize the project structure as follows:
+
+```plaintext
+src/
+  features/
+    auth/
+      components/
+        LoginForm.tsx
+        RegisterForm.tsx
+      hooks/
+        useAuth.ts
+      api/
+        authApi.ts
+      store/
+        authStore.ts
+      types/
+        authTypes.ts
+    profile/
+      components/
+        UserProfile.tsx
+        EditProfileForm.tsx
+      hooks/
+        useProfile.ts
+      api/
+        profileApi.ts
+      store/
+        profileStore.ts
+      types/
+        profileTypes.ts
+  components/
+    ui/
+      Button.tsx
+      Input.tsx
+      Modal.tsx
+  lib/
+    navigation/
+      AppRouter.tsx
+    nativewind/
+      tailwind.config.js
+      theme.ts
+    utils/
+      apiClient.ts
+      helpers.ts
+  app/
+    _layout.tsx
+    index.tsx
+```
+
+---
+
+### **Naming Conventions**
+- **Variables and Functions**: Use `camelCase` (e.g., `isAuthenticated`, `fetchUserData`).  
+- **Components**: Use `PascalCase` (e.g., `LoginForm`, `UserProfile`).  
+- **Directories**: Use lowercase and hyphenated names (e.g., `auth`, `profile`, `user-profile`).  
+
+---
+
+### **JavaScript Usage**
+- **Avoid Global Variables**: Use feature-based state management with **Zustand** for local and shared states.  
+- **Use ES6+ Features**: Leverage features like arrow functions, destructuring, and template literals for cleaner and concise code.  
+- **Type Checking**: Use **TypeScript** to define types and interfaces for props, API responses, and Zustand state.  
+
+---
+
+### **Performance Optimization**
+- **State Management**: Use **Zustand** for lightweight and optimized state management. Avoid unnecessary state updates.  
+- **Memoization**: Use `React.memo` and `useMemo` to prevent unnecessary re-renders.  
+- **FlatList Optimization**: Use props like `removeClippedSubviews`, `maxToRenderPerBatch`, and `windowSize` for large lists.  
+- **Avoid Anonymous Functions**: Use `useCallback` for event handlers and functions passed as props.  
+
+---
+
+### **UI and Styling**
+- **NativeWind for Styling**: Use **NativeWind** for consistent, responsive, and dynamic styles. Extend Tailwind CSS utilities for custom styles using `tailwind.config.js`.  
+- **Responsive Design**: Ensure designs adapt to various screen sizes using **media queries**, **container queries**, and responsive units (`rem`, `px`).  
+- **Reusable UI Components**: Build reusable components (e.g., `Button`, `Input`, `Modal`) using **react-native-reusables** and style them with **NativeWind**.  
+
+---
+
+### **Best Practices**
+- **Expo Router**: Use **Expo Router** for file-based routing. Set up navigation in the `lib/navigation/AppRouter.tsx` file as per [Expo Router documentation](mdc:https:/docs.expo.dev/router/introduction).  
+- **NativeWind**: Use **NativeWind** for styling and configure themes (light/dark mode) in the `lib/nativewind/theme.ts` file as per [NativeWind documentation](mdc:https:/www.nativewind.dev).  
+- **Reusables Components**: Use **react-native-reusables** to implement accessible UI patterns (e.g., `Tabs`, `Dialog`, `Popover`) as per [rnr docs](mdc:https:/rnr-docs.vercel.app).  
+- **Zustand Store**: Use **Zustand** for state management. Organize the store for each feature in its respective `store` folder.  
+
+---
+
+### **Auth Feature Example**
+The **auth** feature demonstrates the feature-based architecture, containing the following:
+- **components/**: UI components like `LoginForm`, `RegisterForm`.
+- **hooks/**: Custom hooks such as `useAuth` for managing authentication logic.
+- **api/**: API handlers like `authApi` to manage login, registration, and token refresh.
+- **store/**: Zustand store (`authStore`) for managing authentication state.
+- **types/**: TypeScript types (`authTypes`) for data consistency.
+
+This structure ensures that the **auth** feature is modular, testable, and easy to maintain. Use similar structures for other features like `profile`, `chat`, and `settings`.
+
+---
+
+### **Key Tools and Libraries**
+- **NativeWind**: For styling using Tailwind CSS in React Native.  
+- **react-native-reusables**: For accessible, customizable UI components.  
+- **Zustand**: For lightweight state management.  
+- **Expo Router**: For file-based navigation across Android, iOS, and web.  
+
+This approach ensures a **scalable**, **modular**, and **developer-friendly** codebase.
