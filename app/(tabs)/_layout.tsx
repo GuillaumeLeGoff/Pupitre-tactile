@@ -9,13 +9,7 @@ export default function TabLayout() {
       headerShown: false,
       tabBarStyle: { display: 'none' }
     }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Accueil',
-          tabBarIcon: ({ color }) => <Home size={24} color={color} />,
-        }}
-      />
+      
       <Tabs.Screen
         name="sports"
         options={{

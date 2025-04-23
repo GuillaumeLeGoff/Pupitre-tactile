@@ -16,12 +16,20 @@ SplashScreen.preventAutoHideAsync();
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
-  colors: NAV_THEME.light,
+  colors: {
+    ...NAV_THEME.light,
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+  },
 };
 
 const DARK_THEME: Theme = {
   ...DarkTheme,
-  colors: NAV_THEME.dark,
+  colors: {
+    ...NAV_THEME.dark,
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+  },
 };
 
 export default function RootLayout() {
@@ -59,13 +67,14 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    
+      
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+     
     </ThemeProvider>
- );
+  );
 }
 
 const useIsomorphicLayoutEffect =

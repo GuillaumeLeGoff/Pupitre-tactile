@@ -6,9 +6,9 @@ const useSportHooks = () => {
   const router = useRouter();
   const { setSport } = useSportSelected();
 
- 
   const handleSportSelected = (sport: Sport) => {
     setSport(sport);
+    router.push("/(tabs)/sports/form");
   };
 
   return { handleSportSelected };

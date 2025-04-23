@@ -20,44 +20,45 @@ const SPORTS: Sport[] = [
 ];
 
 const { width } = Dimensions.get('window');
-const NUM_COLUMNS = 6;
+const NUM_COLUMNS = 4;
 const SPACING = 100;
-const GRID_ITEM_SIZE = (width - (NUM_COLUMNS ) * SPACING) / NUM_COLUMNS;
-const ICON_RATIO = 0.5; // Ratio de la taille de l'icône par rapport à son conteneur
+const GRID_ITEM_SIZE = (((NUM_COLUMNS + 1) * SPACING)) / NUM_COLUMNS;
+const ICON_RATIO = 0.6;
 
 export const SportGrid = () => {
- 
   const { handleSportSelected } = useSportHooks();
   return (
-    <View className="px-2.5 ">
-      <View className="flex-row flex-wrap ">
+    <View className="p-6  ">
+      <View
+        className="flex-wrap flex-row "
+        style={{
+          flexWrap: "wrap",
+          marginHorizontal: -SPACING / 2,
+        }}
+      >
         {SPORTS.map((sport) => (
           <TouchableOpacity
             key={sport.id}
-            className="items-center"
-            style={{
-              width: GRID_ITEM_SIZE,
-              margin: SPACING / 2,
-            }}
             onPress={() => handleSportSelected(sport)}
           >
             <View
-              className="bg-card rounded-2xl border border-border items-center justify-center"
+              className="bg-card rounded-lg border border-border items-center justify-center"
               style={{
                 width: GRID_ITEM_SIZE,
                 height: GRID_ITEM_SIZE,
+                marginHorizontal: SPACING / 2,
               }}
             >
               <Image
                 source={sport.icon}
                 style={{
-                  width: GRID_ITEM_SIZE * ICON_RATIO,
-                  height: GRID_ITEM_SIZE * ICON_RATIO,
+                  width: (GRID_ITEM_SIZE * ICON_RATIO) / 2,
+                  height: (GRID_ITEM_SIZE * ICON_RATIO) / 2,
                 }}
                 resizeMode="contain"
               />
             </View>
-            <Text className="mt-4 text-lg stext-foreground text-center">
+            <Text className="mt-4 text-lg font-bold text-foreground text-center">
               {sport.name}
             </Text>
           </TouchableOpacity>
