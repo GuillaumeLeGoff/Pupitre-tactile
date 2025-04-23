@@ -63,11 +63,9 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <View className="absolute bottom-4 right-4">
-        <ToggleTheme />
-      </View>
+    
     </ThemeProvider>
-  );
+ );
 }
 
 const useIsomorphicLayoutEffect =

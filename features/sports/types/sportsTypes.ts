@@ -1,7 +1,9 @@
+import { ImageSourcePropType } from 'react-native';
+
 export interface Sport {
   id: string;
   name: string;
-  icon: string;
+  icon: ImageSourcePropType;
   config?: SportConfig;
   matches?: Match[];
   players?: Player[];
