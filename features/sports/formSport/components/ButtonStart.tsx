@@ -3,10 +3,13 @@ import { Button } from "../../../../components/ui/button";
 import { Text } from "react-native";
 import { useGameSettings } from "../store/gameSettings";
 import { useTeamSelection } from "../store/teamStore";
+import { useRouter } from "expo-router";
 
 export const ButtonStart = () => {
   const gameSettings = useGameSettings();
   const teams = useTeamSelection();
+  const router = useRouter();
+
   return (
     <Button
       variant="default"
@@ -18,7 +21,7 @@ export const ButtonStart = () => {
         gameSettings.selectedMode === null
       }
       onPress={() => {
-        // TODO: Ajouter la logique de démarrage
+        router.push("/score");
       }}
     >
       <Text style={{ color: "white", fontSize: 60, fontWeight: "bold" }}>
