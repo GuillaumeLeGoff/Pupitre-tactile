@@ -1,36 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { Platform, View } from 'react-native';
-import 'react-native-reanimated';
-import '../global.css';
-import { ThemeProvider, DefaultTheme, DarkTheme, Theme } from '@react-navigation/native';
-import { NAV_THEME } from '../lib/constants';
-import { useColorScheme } from '../lib/useColorScheme';
-import { ToggleTheme } from '../components/ToggleTheme';
+import React, { useEffect, useRef } from "react";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { Platform, View } from "react-native";
+import "react-native-reanimated";
+import "../global.css";
+import {
+  ThemeProvider,
+  DefaultTheme,
+  DarkTheme,
+  Theme,
+} from "@react-navigation/native";
+import { useColorScheme } from "../lib/useColorScheme";
+import { ToggleTheme } from "../components/ToggleTheme";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
-const LIGHT_THEME: Theme = {
-  ...DefaultTheme,
-  colors: {
-    ...NAV_THEME.light,
-    background: '#FFFFFF',
-    card: '#FFFFFF',
-  },
-};
-
-const DARK_THEME: Theme = {
-  ...DarkTheme,
-  colors: {
-    ...NAV_THEME.dark,
-    background: '#FFFFFF',
-    card: '#FFFFFF',
-  },
-};
 
 export default function RootLayout() {
   const hasMounted = useRef(false);
@@ -38,7 +24,7 @@ export default function RootLayout() {
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
 
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -52,9 +38,9 @@ export default function RootLayout() {
       return;
     }
 
-    if (Platform.OS === 'web') {
+    if (Platform.OS === "web") {
       // Adds the background color to the html element to prevent white background on overscroll.
-      document.documentElement.classList.add('bg-background');
+      document.documentElement.classList.add("bg-background");
     }
     setIsColorSchemeLoaded(true);
     hasMounted.current = true;
@@ -65,17 +51,19 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-     
-    </ThemeProvider>
+    <>
+      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="[sportId]" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+    </>
   );
 }
 
 const useIsomorphicLayoutEffect =
-  Platform.OS === 'web' && typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
+  Platform.OS === "web" && typeof window === "undefined"
+    ? React.useEffect
+    : React.useLayoutEffect;

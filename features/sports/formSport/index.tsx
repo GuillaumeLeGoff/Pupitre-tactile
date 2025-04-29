@@ -1,20 +1,35 @@
-import React from 'react';
-import { SafeAreaView, Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useSportSelected } from '../selectSport/store/sportSelected';
-import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { TeamSelect } from './components/TeamSelect';
-import { ButtonStart } from './components/ButtonStart';
-import { SettingsCard } from './components/SettingsCard';
+import React from "react";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from "react-native";
+import { useSportSelected } from "../selectSport/store/sportSelected";
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { TeamSelect } from "./components/TeamSelect";
+import { ButtonStart } from "./components/ButtonStart";
+import { SettingsCard } from "./components/SettingsCard";
 
 export default function FormSportScreen() {
-  const { sport } = useSportSelected();
+  const { sport, clearSport } = useSportSelected();
   const router = useRouter();
+
+  const handleBack = () => {
+    clearSport(); // Désélectionner le sport quand on retourne à la liste
+    router.navigate("/sports");
+  };
 
   return (
     <View style={styles.container}>
-      <View  style={{paddingBottom: 24}} className="flex-row items-center mb-4">
-        <TouchableOpacity onPress={() => router.navigate("/sports")}>
+      <View
+        style={{ paddingBottom: 24 }}
+        className="flex-row items-center mb-4"
+      >
+        <TouchableOpacity onPress={handleBack}>
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
 
@@ -22,17 +37,17 @@ export default function FormSportScreen() {
           {sport?.icon && (
             <Image
               source={sport.icon}
-              className="w-6 h-6 mr-4"
-              style={{ width: 24, height: 24 }}
+              className="w-8 h-8 mr-6"
+              style={{ width: 32, height: 32 }}
               resizeMode="contain"
             />
           )}
-          <Text className="text-2xl font-bold text-foreground">
+          <Text className="text-3xl font-bold text-foreground">
             {sport?.name}
           </Text>
         </View>
       </View>
-      
+
       <View style={styles.teamRow}>
         <View style={styles.teamContainer}>
           <TeamSelect />
@@ -52,23 +67,20 @@ export default function FormSportScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24
+    padding: 24,
   },
   teamRow: {
-    flexDirection: 'row',
-    marginBottom: 16
+    flexDirection: "row",
+    marginBottom: 16,
   },
   teamContainer: {
-    width: '70%',
-    paddingRight: 24
+    width: "70%",
+    paddingRight: 24,
   },
   buttonContainer: {
-    width: '30%'
+    width: "30%",
   },
   settingsContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
-
-
- 

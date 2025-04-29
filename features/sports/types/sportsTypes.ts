@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from 'react-native';
+import { ImageSourcePropType } from "react-native";
 
 export interface Sport {
   id: string;
@@ -19,6 +19,8 @@ export interface Team {
   id: string;
   name: string;
   number: number;
+  sportId?: string; // ID du sport associé
+  players?: Player[]; // Liste des joueurs de l'équipe
 }
 
 export interface Match {
