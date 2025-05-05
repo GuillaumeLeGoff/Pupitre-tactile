@@ -335,7 +335,6 @@ export default function Score() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -346,9 +345,11 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 3,
     flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
   teamCard: {
-    flex: 1,
+    width: "22%",
     margin: 10,
     height: "100%",
     borderWidth: 1,
@@ -399,7 +400,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
-    paddingHorizontal: 10,
+
     paddingVertical: 5,
     borderRadius: 15,
     marginRight: 6,
@@ -435,29 +436,27 @@ const styles = StyleSheet.create({
     color: "#999",
   },
   centerContent: {
-    flex: 1.5,
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: 10,
+    flex: 1,
   },
   scoreContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+
     width: "100%",
-    paddingHorizontal: 20,
   },
   scoreBox: {
     backgroundColor: "white",
-    width: 100,
     height: 100,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#ddd",
-    margin: 10,
-    position: "relative",
+    margin: "2%",
   },
   scoreText: {
     fontSize: 50,
@@ -472,10 +471,10 @@ const styles = StyleSheet.create({
     color: "#777",
   },
   timerContainer: {
-    marginTop: 20,
     backgroundColor: "white",
-    width: "90%",
-    padding: 15,
+    height: 100,
+    width: "96%",
+
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#ddd",
@@ -483,26 +482,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   timerText: {
+    width: 100,
     fontSize: 36,
     fontWeight: "bold",
   },
   controlButtons: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "90%",
-    marginTop: 40,
+    width: "100%",
   },
   controlButton: {
-    width: 90,
-    height: 90,
     backgroundColor: "white",
+    height: 100,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    padding: 5,
+    margin: "2%",
   },
   controlButtonTitle: {
     fontSize: 12,
@@ -536,7 +534,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   timeoutCard: {
-    width: 140,
+    width: "45%",
     height: 90,
     backgroundColor: "white",
     borderRadius: 10,
