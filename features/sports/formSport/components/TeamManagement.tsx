@@ -129,7 +129,7 @@ export default function TeamManagementScreen() {
           <Button onPress={() => router.back()}>Retour</Button>
           <Button
             variant="destructive"
-            onPress={() => confirmDeleteTeam(selectedTeam.id)}
+            onPress={() => confirmDeleteTeam(selectedTeam.id, isHomeTeam)}
             className="bg-red-500"
           >
             Supprimer l'équipe

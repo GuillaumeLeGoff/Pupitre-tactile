@@ -1,25 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
   ScrollView,
   TextInput,
   Dimensions,
+  Modal,
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView,
 } from "react-native";
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "~/components/ui/select";
 import { Switch } from "~/components/ui/switch";
 import { Text } from "~/components/ui/text";
+import { Button } from "~/components/ui/button";
+import { SaveIcon } from "~/lib/icons/Save";
 import { useGameSettings, GameMode } from "../store/gameSettings";
 
 export const SettingsCard = () => {
   const gameSettings = useGameSettings();
+  const [modeModalVisible, setModeModalVisible] = useState(false);
+
+  const openModeSelector = () => setModeModalVisible(true);
+  const closeModeSelector = () => setModeModalVisible(false);
+
+  const selectMode = (value: GameMode) => {
+    gameSettings.setSelectedMode(value);
+    closeModeSelector();
+  };
+
+  const gameModes = [
+    { label: "Mode classique", value: "classic" as GameMode },
+    { label: "Mode rapide", value: "quick" as GameMode },
+    { label: "Mode entraînement", value: "training" as GameMode },
+    { label: "Mode tournoi", value: "tournament" as GameMode },
+  ];
 
   // Composant pour un élément de paramètre
   const ParameterItem = ({
@@ -227,27 +242,58 @@ export const SettingsCard = () => {
         <CardTitle>Paramètres</CardTitle>
       </CardHeader>
       <CardContent style={styles.content}>
-        <View className="mb-4">
-          <Text className="text-sm font-medium mb-2">Mode de jeu</Text>
-          <Select
-            value={gameSettings.selectedMode || undefined}
-            onValueChange={(value) => {
-              console.log("Mode sélectionné:", value);
-              if (value) {
-                gameSettings.setSelectedMode(value as any);
-              }
-            }}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Sélectionnez un mode" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem label="Mode classique" value="classic" />
-              <SelectItem label="Mode rapide" value="quick" />
-              <SelectItem label="Mode entraînement" value="training" />
-              <SelectItem label="Mode tournoi" value="tournament" />
-            </SelectContent>
-          </Select>
+        <View className="mb-4 flex-row items-center justify-between">
+          <Text className="text-sm font-medium">Mode de jeu</Text>
+          <View className="flex-row items-center gap-2">
+            <TouchableOpacity
+              style={styles.selectButton}
+              onPress={openModeSelector}
+            >
+              <Text style={styles.selectText}>
+                {gameSettings.selectedMode
+                  ? gameModes.find(mode => mode.value === gameSettings.selectedMode)?.label
+                  : "Sélectionnez un mode"}
+              </Text>
+            </TouchableOpacity>
+
+            <Modal
+              visible={modeModalVisible}
+              transparent={true}
+              animationType="slide"
+              onRequestClose={closeModeSelector}
+            >
+              <SafeAreaView style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>Sélectionnez un mode de jeu</Text>
+                  
+                  <FlatList
+                    data={gameModes}
+                    keyExtractor={(item) => String(item.value)}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity
+                        style={styles.modeItem}
+                        onPress={() => selectMode(item.value)}
+                      >
+                        <Text style={styles.modeName}>{item.label}</Text>
+                      </TouchableOpacity>
+                    )}
+                    ItemSeparatorComponent={() => <View style={styles.separator} />}
+                  />
+                  
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={closeModeSelector}
+                  >
+                    <Text style={styles.closeButtonText}>Fermer</Text>
+                  </TouchableOpacity>
+                </View>
+              </SafeAreaView>
+            </Modal>
+
+            <Button variant="ghost" className="ml-2">
+              <SaveIcon className="h-4 w-4" />
+            </Button>
+          </View>
         </View>
 
         <View style={styles.parametersContainer}>
@@ -258,8 +304,14 @@ export const SettingsCard = () => {
               {renderThirdColumn()}
             </View>
           ) : (
-            <View className="flex-1 justify-center items-center p-5">
-              <Text className="text-sm font-medium text-center text-gray-500">
+            <View className="justify-center items-center  p-5">
+              <Text
+                style={{
+                  color: "#c9c9c9",
+                  textAlign: "center",
+                }}
+                className="text-sm font-medium"
+              >
                 Veuillez sélectionner un mode de jeu pour configurer les
                 paramètres
               </Text>
@@ -336,5 +388,64 @@ const styles = StyleSheet.create({
     width: 60,
     textAlign: "center",
     backgroundColor: "white",
+  },
+  selectButton: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 10,
+    backgroundColor: "white",
+    minHeight: 48,
+    justifyContent: "center",
+    width: 300,
+  },
+  selectText: {
+    fontSize: 14,
+    color: "#666",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: "80%",
+    maxHeight: "70%",
+    backgroundColor: "white",
+    borderRadius: 12,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  modeItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+  },
+  modeName: {
+    fontSize: 16,
+  },
+  closeButton: {
+    marginTop: 20,
+    padding: 12,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  closeButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

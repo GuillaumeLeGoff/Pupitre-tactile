@@ -11,6 +11,26 @@ const SPORTS: Sport[] = [
     name: "Basketball",
   },
   {
+    id: "badminton",
+    icon: require("../../../../assets/icons/Badminton.png"),
+    name: "Badminton",
+  },
+  {
+    id: "boxe",
+    icon: require("../../../../assets/icons/Boxe.png"),
+    name: "Boxe",
+  },
+  {
+    id: "fieldHockey",
+    icon: require("../../../../assets/icons/FieldHockey.png"),
+    name: "Field Hockey",
+  },
+  {
+    id: "floorball",
+    icon: require("../../../../assets/icons/FloorBall.png"),
+    name: "Floorball",
+  },
+  {
     id: "volleyball",
     icon: require("../../../../assets/icons/Volley.png"),
     name: "Volleyball",
@@ -30,11 +50,7 @@ const SPORTS: Sport[] = [
     icon: require("../../../../assets/icons/HandBall.png"),
     name: "Handball",
   },
-  {
-    id: "badminton",
-    icon: require("../../../../assets/icons/Badminton.png"),
-    name: "Badminton",
-  },
+
   {
     id: "tableTennis",
     icon: require("../../../../assets/icons/TableTennis.png"),
@@ -78,9 +94,11 @@ export const SportGrid = () => {
   return (
     <View className="p-6  ">
       <View
-        className="flex-wrap flex-row "
         style={{
           flexWrap: "wrap",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
           marginHorizontal: -SPACING / 2,
         }}
       >
@@ -88,6 +106,10 @@ export const SportGrid = () => {
           <TouchableOpacity
             key={sport.id}
             onPress={() => handleSportSelected(sport)}
+            style={{
+      
+              marginVertical: SPACING / 4,
+            }}
           >
             <View
               className="bg-card rounded-lg border border-border items-center justify-center"
@@ -95,6 +117,7 @@ export const SportGrid = () => {
                 width: GRID_ITEM_SIZE,
                 height: GRID_ITEM_SIZE,
                 marginHorizontal: SPACING / 2,
+             
               }}
             >
               <Image
@@ -106,7 +129,10 @@ export const SportGrid = () => {
                 resizeMode="contain"
               />
             </View>
-            <Text className="mt-4 text-lg font-bold text-foreground text-center">
+            <Text
+              style={{ marginTop: 12 }}
+              className="mt-4 text-lg font-bold text-foreground text-center"
+            >
               {sport.name}
             </Text>
           </TouchableOpacity>

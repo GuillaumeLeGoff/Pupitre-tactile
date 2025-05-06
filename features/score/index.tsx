@@ -19,6 +19,8 @@ import {
 import { useTeamSelection } from "../sports/formSport/store/teamStore";
 import { useSportSelected } from "../sports/selectSport/store/sportSelected";
 import { useGameSettings } from "../sports/formSport/store/gameSettings";
+import { ArrowBigLeftIcon } from "../../lib/icons/ArrowBigLeft";
+import { ArrowBigRightIcon } from "../../lib/icons/ArrowBigRight";
 
 // Interface pour le score des joueurs
 interface PlayerScores {
@@ -42,6 +44,7 @@ export default function Score() {
   const [timer, setTimer] = useState("00:00");
   const [currentPeriod, setCurrentPeriod] = useState(1);
   const [playerScores, setPlayerScores] = useState<PlayerScores>({});
+  const [possession, setPossession] = useState<'home' | 'away'>('home');
 
   // États pour les fautes
   const [homeFouls, setHomeFouls] = useState(0);
@@ -129,6 +132,30 @@ export default function Score() {
       incrementHomeFouls();
     } else {
       incrementAwayFouls();
+    }
+  };
+
+  // Fonction pour changer la possession
+  const changePossession = (newPossession: 'home' | 'away') => {
+    setPossession(newPossession);
+  };
+
+  // Fonction pour gérer l'avancement du jeu
+  const handleGameAdvance = (direction: 'left' | 'right') => {
+    if (direction === 'left') {
+      // Retour en arrière
+      if (possession === 'home') {
+        changePossession('away');
+      } else {
+        changePossession('home');
+      }
+    } else {
+      // Avancer
+      if (possession === 'home') {
+        changePossession('away');
+      } else {
+        changePossession('home');
+      }
     }
   };
 
@@ -281,6 +308,28 @@ export default function Score() {
             </Pressable>
           </View>
 
+          {/* Boutons d'avancement du jeu */}
+          <View style={styles.controlButtons}>
+            <Pressable
+              style={[
+                styles.controlButton,
+                possession === 'home' ? styles.activePossession : styles.inactivePossession
+              ]}
+              onPress={() => handleGameAdvance('left')}
+            >
+              <ArrowBigLeftIcon size={32} color={possession === 'home' ? "#fff" : "#333"} />
+            </Pressable>
+            <Pressable
+              style={[
+                styles.controlButton,
+                possession === 'away' ? styles.activePossession : styles.inactivePossession
+              ]}
+              onPress={() => handleGameAdvance('right')}
+            >
+              <ArrowBigRightIcon size={32} color={possession === 'away' ? "#fff" : "#333"} />
+            </Pressable>
+          </View>
+
           {/* Temps morts */}
           <View style={styles.timeoutsContainer}>
             {/* Temps morts équipe domicile */}
@@ -304,9 +353,9 @@ export default function Score() {
 
           {/* Bouton retour en bas */}
           <View style={styles.bottomButton}>
-            <Button variant="outline" size="lg" onPress={() => router.back()}>
+            <Pressable   onPress={() => router.back()}>
               <Text className="text-xl">Retour</Text>
-            </Button>
+            </Pressable>
           </View>
         </View>
 
@@ -530,8 +579,7 @@ const styles = StyleSheet.create({
   timeoutsContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "90%",
-    marginTop: 20,
+    width: "100%",
   },
   timeoutCard: {
     width: "45%",
@@ -566,5 +614,11 @@ const styles = StyleSheet.create({
   },
   timeoutIndicatorInactive: {
     backgroundColor: "#e0e0e0", // Gris pour les temps morts utilisés
+  },
+  activePossession: {
+    backgroundColor: '#0066cc',
+  },
+  inactivePossession: {
+    backgroundColor: 'white',
   },
 });

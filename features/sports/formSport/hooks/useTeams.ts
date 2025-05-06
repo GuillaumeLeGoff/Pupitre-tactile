@@ -241,11 +241,17 @@ export function useTeams(sport: Sport | null): UseTeamsReturn {
       const team = teams.find((t) => t.id === teamId);
       if (team) {
         setSelectedTeam(team);
+        // Mettre à jour l'équipe dans le store si c'est l'équipe domicile ou extérieur
+        if (homeTeam?.id === teamId) {
+          setHomeTeam(team);
+        } else if (awayTeam?.id === teamId) {
+          setAwayTeam(team);
+        }
       }
 
       router.push(`/team/${teamId}`);
     },
-    [router, teams, setSelectedTeam]
+    [router, teams, setSelectedTeam, homeTeam, awayTeam, setHomeTeam, setAwayTeam]
   );
 
   // Gérer la sélection d'une équipe
@@ -254,7 +260,14 @@ export function useTeams(sport: Sport | null): UseTeamsReturn {
       if (value === "add") {
         const newTeam = await addNewTeam(sport);
         if (newTeam) {
+          // Mettre à jour l'équipe sélectionnée
           setSelectedTeam(newTeam);
+          // Mettre à jour l'équipe domicile ou extérieur selon le cas
+          if (isHomeTeam) {
+            setHomeTeam(newTeam);
+          } else {
+            setAwayTeam(newTeam);
+          }
           router.push(`/team/${newTeam.id}`);
         }
       } else {
@@ -268,15 +281,7 @@ export function useTeams(sport: Sport | null): UseTeamsReturn {
         }
       }
     },
-    [
-      teams,
-      sport,
-      addNewTeam,
-      router,
-      setHomeTeam,
-      setAwayTeam,
-      setSelectedTeam,
-    ]
+    [teams, sport, addNewTeam, router, setHomeTeam, setAwayTeam, setSelectedTeam]
   );
 
   // Récupérer une équipe par son ID
@@ -427,29 +432,20 @@ export function useTeams(sport: Sport | null): UseTeamsReturn {
 
   // Confirmer la suppression d'une équipe
   const confirmDeleteTeam = useCallback(
-    (teamId: string): Promise<void> => {
-      return new Promise<void>((resolve) => {
-        Alert.alert(
-          "Confirmation",
-          "Êtes-vous sûr de vouloir supprimer cette équipe ?",
-          [
-            {
-              text: "Annuler",
-              style: "cancel",
-              onPress: () => resolve(),
-            },
-            {
-              text: "Supprimer",
-              style: "destructive",
-              onPress: () => {
-                deleteTeam(teamId).then(resolve);
-              },
-            },
-          ]
-        );
-      });
+    async (teamId: string, isHomeTeam: boolean): Promise<void> => {
+      try {
+        await deleteTeam(teamId);
+        if (isHomeTeam) {
+          setHomeTeam(null);
+        } else {
+          setAwayTeam(null);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la suppression de l'équipe:", error);
+        Alert.alert("Erreur", "Impossible de supprimer l'équipe");
+      }
     },
-    [deleteTeam]
+    [deleteTeam, setHomeTeam, setAwayTeam]
   );
 
   // Charger les équipes au montage et quand le sport change

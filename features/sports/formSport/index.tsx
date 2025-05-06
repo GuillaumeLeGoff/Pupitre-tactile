@@ -29,7 +29,7 @@ export default function FormSportScreen() {
         style={{ paddingBottom: 24 }}
         className="flex-row items-center mb-4"
       >
-        <TouchableOpacity onPress={handleBack}>
+        <TouchableOpacity style={{ marginRight: 24 }} onPress={handleBack}>
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
 
@@ -37,12 +37,12 @@ export default function FormSportScreen() {
           {sport?.icon && (
             <Image
               source={sport.icon}
-              className="w-8 h-8 mr-6"
+              className="w-8 h-8 mr-6 ml-4"
               style={{ width: 32, height: 32 }}
               resizeMode="contain"
             />
           )}
-          <Text className="text-3xl font-bold text-foreground">
+          <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 16 }}>
             {sport?.name}
           </Text>
         </View>
